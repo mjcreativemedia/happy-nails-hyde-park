@@ -141,7 +141,6 @@ const stars = business.hero.rating
     <section class="work-section" id="featured-work">
       <div class="section-shell section-heading">
         <div class="section-label">{business.proof.labels.featured}</div>
-        <h2>Pick a color. Find a detail. Save your favorite.</h2>
         <div class="collection-links" aria-label="Design collections">
           {collections.map((collection) => (
             <a href={collectionPath(collection.slug)}>{collection.tag}</a>
@@ -343,16 +342,8 @@ const stars = business.hero.rating
     margin-bottom: 22px;
   }
 
-  .section-heading h2 {
-    max-width: 720px;
-    margin: 0;
-    font-size: clamp(2rem, 4.8vw, 3.8rem);
-    line-height: 1;
-    letter-spacing: -0.045em;
-  }
-
   .collection-links {
-    margin-top: 22px;
+    margin-top: 14px;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -398,7 +389,7 @@ const stars = business.hero.rating
     border: 1px solid #d4dcd6;
     border-radius: 8px;
     display: grid;
-    grid-template-columns: 1.45fr 0.55fr;
+    grid-template-columns: 1fr;
     gap: 32px;
     background: white;
     box-shadow: 0 10px 30px rgba(24, 44, 38, 0.06);
@@ -407,7 +398,7 @@ const stars = business.hero.rating
   .service-list {
     margin-top: 18px;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
   }
 

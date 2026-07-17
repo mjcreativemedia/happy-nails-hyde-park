@@ -307,8 +307,20 @@ export const proofs: Proof[] = [
 ];
 
 
+export function interleaveMotion(items: Proof[]) {
+  const stills = items.filter((proof) => proof.media[0]?.type !== "video");
+  const motion = items.filter((proof) => proof.media[0]?.type === "video");
+  const ordered = [...stills];
+
+  motion.forEach((proof, index) => {
+    ordered.splice(Math.min(index * 5, ordered.length), 0, proof);
+  });
+
+  return ordered;
+}
+
 export function getFeaturedProofs(limit = 3) {
-  return proofs.filter((proof) => proof.featured).slice(0, limit);
+  return interleaveMotion(proofs.filter((proof) => proof.featured)).slice(0, limit);
 }
 
 export function getProof(slug: string) {
