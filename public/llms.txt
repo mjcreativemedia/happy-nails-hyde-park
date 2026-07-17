@@ -1,0 +1,24 @@
+# Happy Nails
+
+> Happy Nails is a fixed-location nail salon at 1508 E 55th Street in Chicago's Hyde Park neighborhood. This site presents a curated portfolio of documented manicures, acrylic sets, and nail art.
+
+## Primary Pages
+
+- [Home](https://happy-nails4chicago.edan.io/): Business profile, featured designs, services, location, and contact actions.
+- [Gallery](https://happy-nails4chicago.edan.io/gallery/): Curated nail design portfolio with individual design pages.
+- [Services](https://happy-nails4chicago.edan.io/services/): Manicures, acrylic sets, and nail art.
+
+## Gallery Collections
+
+- [French](https://happy-nails4chicago.edan.io/gallery/collections/french/)
+- [Chrome](https://happy-nails4chicago.edan.io/gallery/collections/chrome/)
+- [Acrylic](https://happy-nails4chicago.edan.io/gallery/collections/acrylic/)
+- [Nail Art](https://happy-nails4chicago.edan.io/gallery/collections/nail-art/)
+- [Minimal](https://happy-nails4chicago.edan.io/gallery/collections/minimal/)
+- [Seasonal](https://happy-nails4chicago.edan.io/gallery/collections/seasonal/)
+
+## Contact
+
+- Phone: (773) 966-4733
+- Address: 1508 E 55th St, Chicago, Illinois
+- Instagram: https://www.instagram.com/happynails55/
