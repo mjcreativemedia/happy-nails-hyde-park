@@ -1,0 +1,590 @@
+---
+import ContactSection from "../components/ContactSection.astro";
+import ProofCard from "../components/ProofCard.astro";
+import ProofMedia from "../components/ProofMedia.astro";
+import ResponsiveImage from "../components/ResponsiveImage.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import {
+  business,
+  type Service,
+  type ServiceArea,
+} from "../config/business";
+import {
+  getProvenServiceAreas,
+  getDetailProofs,
+  getProofCollections,
+  getProofsByService,
+  getRelatedProofs,
+  proofs,
+  type Proof,
+  validateContent,
+} from "../data/proofs";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  archiveSchema,
+  collectionSchema,
+  locationSchema,
+  proofSchema,
+  serviceSchema,
+} from "../lib/schema";
+import {
+  cleanRoute,
+  collectionPath,
+  locationPath,
+  locationsPath,
+  proofArchivePath,
+  proofPath,
+  servicePath,
+  servicesPath,
+} from "../lib/urls";
+
+type PageProps =
+  | { kind: "proof-archive" }
+  | { kind: "proof-collection"; tag: string; slug: string; collectionProofs: Proof[] }
+  | { kind: "proof-detail"; proof: Proof }
+  | { kind: "services-index" }
+  | { kind: "service-detail"; service: Service; relatedProofs: Proof[] }
+  | { kind: "locations-index"; areas: Array<ServiceArea & { proofs: Proof[] }> }
+  | { kind: "location-detail"; area: ServiceArea; relatedProofs: Proof[] };
+
+export function getStaticPaths() {
+  validateContent();
+  const proofBase = cleanRoute(business.routes.proof);
+  const servicesBase = cleanRoute(business.routes.services);
+  const locationsBase = cleanRoute(business.routes.locations);
+  const provenAreas = getProvenServiceAreas();
+  const detailProofs = getDetailProofs();
+  const collections = getProofCollections();
+
+  return [
+    { params: { path: proofBase }, props: { kind: "proof-archive" } },
+    ...detailProofs.map((proof) => ({
+      params: { path: `${proofBase}/${proof.slug}` },
+      props: { kind: "proof-detail", proof },
+    })),
+    ...collections.map((collection) => ({
+      params: { path: `${proofBase}/collections/${collection.slug}` },
+      props: {
+        kind: "proof-collection",
+        tag: collection.tag,
+        slug: collection.slug,
+        collectionProofs: collection.proofs,
+      },
+    })),
+    { params: { path: servicesBase }, props: { kind: "services-index" } },
+    ...business.services.map((service) => ({
+      params: { path: `${servicesBase}/${service.slug}` },
+      props: {
+        kind: "service-detail",
+        service,
+        relatedProofs: getProofsByService(service.slug),
+      },
+    })),
+    ...(provenAreas.length
+      ? [
+          {
+            params: { path: locationsBase },
+            props: { kind: "locations-index", areas: provenAreas },
+          },
+          ...provenAreas.map((area) => ({
+            params: { path: `${locationsBase}/${area.slug}` },
+            props: {
+              kind: "location-detail",
+              area,
+              relatedProofs: area.proofs,
+            },
+          })),
+        ]
+      : []),
+  ];
+}
+
+const page = Astro.props as PageProps;
+---
+
+{
+  page.kind === "proof-archive" && (
+    <BaseLayout
+      seo={{
+        title: `${business.proof.labels.archive} | ${business.name}`,
+        description: `Browse real ${business.proof.plural.toLowerCase()} completed by ${business.name}.`,
+        canonical: proofArchivePath(),
+        image: proofs[0]?.media[0]?.src,
+        jsonLd: archiveSchema(proofs),
+      }}
+    >
+      <SiteHeader />
+      <main>
+        <section class="page-intro shell">
+          <div class="eyebrow">{business.copy.archiveEyebrow}</div>
+          <h1>{business.proof.labels.archive}</h1>
+          <p>{business.copy.archiveIntroduction}</p>
+        </section>
+        <section class="feed">
+          <div class="card-grid shell">
+            {proofs.map((proof) => <ProofCard proof={proof} videoBehavior="viewport" />)}
+          </div>
+        </section>
+        <ContactSection />
+      </main>
+    </BaseLayout>
+  )
+}
+
+{
+  page.kind === "proof-collection" && (
+    <BaseLayout
+      seo={{
+        title: `${page.tag} ${business.proof.plural} | ${business.name}`,
+        description: `Browse ${page.tag.toLowerCase()} ${business.proof.plural.toLowerCase()} from ${business.name}.`,
+        canonical: collectionPath(page.slug),
+        image: page.collectionProofs[0]?.media[0]?.src,
+        jsonLd: collectionSchema(page.tag, page.slug, page.collectionProofs),
+      }}
+    >
+      <SiteHeader />
+      <main>
+        <section class="page-intro shell">
+          <div class="eyebrow">Collection</div>
+          <h1>{page.tag}</h1>
+          <p>{page.collectionProofs.length} curated {page.collectionProofs.length === 1 ? business.proof.singular.toLowerCase() : business.proof.plural.toLowerCase()} from the Happy Nails gallery.</p>
+        </section>
+        <section class="feed">
+          <div class="card-grid shell">
+            {page.collectionProofs.map((proof) => <ProofCard proof={proof} videoBehavior="viewport" />)}
+          </div>
+        </section>
+        <ContactSection />
+      </main>
+    </BaseLayout>
+  )
+}
+
+{
+  page.kind === "proof-detail" && (() => {
+    const { proof } = page;
+    const service = business.services.find((item) => item.slug === proof.service);
+    const related = getRelatedProofs(proof);
+    const formattedDate = new Intl.DateTimeFormat(business.locale, {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    }).format(new Date(`${proof.date}T12:00:00`));
+
+    return (
+      <BaseLayout
+        seo={{
+          title: `${proof.title} | ${business.name}`,
+          description: proof.summary,
+          canonical: proofPath(proof.slug),
+          image: proof.media[0]?.src,
+          type: "article",
+          jsonLd: proofSchema(proof),
+        }}
+      >
+        <SiteHeader />
+        <main>
+          <article>
+            <header class="detail-intro shell">
+              <div class="eyebrow">{business.proof.singular}</div>
+              <h1>{proof.title}</h1>
+              <div class="detail-meta">
+                <time datetime={proof.date}>{formattedDate}</time>
+                {proof.location && <span>{proof.location}</span>}
+                {service && <a href={servicePath(service.slug)}>{service.title}</a>}
+              </div>
+            </header>
+            <div class="gallery shell">
+              <ProofMedia
+                proof={proof}
+                behavior="viewport"
+                sizes="(max-width: 1100px) calc(100vw - 40px), 1060px"
+              />
+            </div>
+            <section class="story shell">
+              <div>
+                <div class="eyebrow">{business.copy.proofBodyEyebrow}</div>
+                <h2>{proof.title}</h2>
+              </div>
+              <div class="story-copy">
+                <p>{proof.body}</p>
+                {proof.captionExcerpt && (
+                  <blockquote>{proof.captionExcerpt}</blockquote>
+                )}
+                {proof.sourceUrl && (
+                  <a class="source-link" href={proof.sourceUrl} target="_blank" rel="noreferrer">See the original post</a>
+                )}
+              </div>
+            </section>
+            {related.length > 0 && (
+              <section class="related shell">
+                <div class="eyebrow">Related {business.proof.plural}</div>
+                <div class="card-grid">
+                  {related.map((item) => <ProofCard proof={item} />)}
+                </div>
+              </section>
+            )}
+            <ContactSection />
+          </article>
+        </main>
+      </BaseLayout>
+    );
+  })()
+}
+
+{
+  page.kind === "services-index" && (
+    <BaseLayout
+      seo={{
+        title: `Services | ${business.name}`,
+        description: `Services provided by ${business.name}: ${business.services.map((service) => service.title).join(", ")}.`,
+        canonical: servicesPath(),
+        image: business.profilePhoto || business.heroImage,
+      }}
+    >
+      <SiteHeader />
+      <main class="shell services-page">
+        <div class="eyebrow">{business.copy.servicesEyebrow}</div>
+        <h1>{business.copy.servicesHeading}</h1>
+        <div class="service-list">
+          {business.services.map((service) => (
+            <a href={servicePath(service.slug)}>
+              <span class="service-list__media">
+                <ResponsiveImage
+                  src={service.image}
+                  alt=""
+                  sizes="(max-width: 720px) 100px, 190px"
+                />
+              </span>
+              <div>
+                <h2>{service.title}</h2>
+                <p>{service.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </main>
+      <ContactSection />
+    </BaseLayout>
+  )
+}
+
+{
+  page.kind === "service-detail" && (() => {
+    const { service, relatedProofs } = page;
+    return (
+      <BaseLayout
+        seo={{
+          title: `${service.title} | ${business.name}`,
+          description: service.description,
+          canonical: servicePath(service.slug),
+          image: relatedProofs[0]?.media[0]?.src || service.image,
+          jsonLd: serviceSchema(service, relatedProofs),
+        }}
+      >
+        <SiteHeader />
+        <main>
+          <section class="detail-intro shell">
+            <div class="eyebrow">{business.businessType}</div>
+            <h1>{service.title}</h1>
+            <p>{service.description}</p>
+          </section>
+          {relatedProofs.length > 0 && (
+            <section class="feed">
+              <div class="shell">
+                <div class="eyebrow">Related {business.proof.plural}</div>
+                <div class="card-grid">
+                  {relatedProofs.map((proof) => <ProofCard proof={proof} />)}
+                </div>
+              </div>
+            </section>
+          )}
+          <ContactSection />
+        </main>
+      </BaseLayout>
+    );
+  })()
+}
+
+{
+  page.kind === "locations-index" && (
+    <BaseLayout
+      seo={{
+        title: `Locations | ${business.name}`,
+        description: `Browse locations where ${business.name} has documented completed work.`,
+        canonical: locationsPath(),
+        image:
+          page.areas[0]?.proofs[0]?.media[0]?.src ||
+          business.profilePhoto ||
+          business.heroImage,
+      }}
+    >
+      <SiteHeader />
+      <main class="shell services-page">
+        <div class="eyebrow">{business.copy.coverageEyebrow}</div>
+        <h1>Documented locations</h1>
+        <div class="location-list">
+          {page.areas.map((area) => (
+            <a href={locationPath(area.slug)}>
+              <strong>{area.name}</strong>
+              <span>
+                {area.proofs.length} documented{" "}
+                {area.proofs.length === 1
+                  ? business.proof.singular.toLowerCase()
+                  : business.proof.plural.toLowerCase()}
+              </span>
+            </a>
+          ))}
+        </div>
+      </main>
+      <ContactSection />
+    </BaseLayout>
+  )
+}
+
+{
+  page.kind === "location-detail" && (() => {
+    const { area, relatedProofs } = page;
+    const placeName = area.region ? `${area.name}, ${area.region}` : area.name;
+    return (
+      <BaseLayout
+        seo={{
+          title: `${business.businessType} in ${placeName} | ${business.name}`,
+          description: `See ${relatedProofs.length} documented ${relatedProofs.length === 1 ? business.proof.singular.toLowerCase() : business.proof.plural.toLowerCase()} completed by ${business.name} in ${placeName}.`,
+          canonical: locationPath(area.slug),
+          image:
+            relatedProofs[0]?.media[0]?.src ||
+            business.profilePhoto ||
+            business.heroImage,
+          jsonLd: locationSchema(area, relatedProofs),
+        }}
+      >
+        <SiteHeader />
+        <main>
+          <section class="detail-intro shell">
+            <div class="eyebrow">Documented work in</div>
+            <h1>{placeName}</h1>
+            <p>
+              {business.name} has {relatedProofs.length} documented{" "}
+              {relatedProofs.length === 1
+                ? business.proof.singular.toLowerCase()
+                : business.proof.plural.toLowerCase()}{" "}
+              in this area. Browse the actual work below.
+            </p>
+          </section>
+          <section class="feed">
+            <div class="card-grid shell">
+              {relatedProofs.map((proof) => <ProofCard proof={proof} />)}
+            </div>
+          </section>
+          <ContactSection />
+        </main>
+      </BaseLayout>
+    );
+  })()
+}
+
+<style>
+  .page-intro,
+  .detail-intro,
+  .services-page {
+    padding-block: 72px 48px;
+  }
+
+  h1,
+  h2 {
+    letter-spacing: -0.045em;
+  }
+
+  h1 {
+    max-width: 900px;
+    margin: 8px 0 20px;
+    font-size: clamp(3.2rem, 9vw, 7rem);
+    line-height: 0.94;
+  }
+
+  .page-intro p,
+  .detail-intro > p {
+    max-width: 680px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 1.17rem;
+    line-height: 1.65;
+  }
+
+  .feed {
+    padding-block: 52px;
+    border-block: 1px solid var(--line);
+    background: var(--soft);
+  }
+
+  .card-grid {
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    color: var(--muted);
+    font-weight: 750;
+  }
+
+  .detail-meta a {
+    color: var(--primary);
+  }
+
+  .gallery {
+    max-width: 900px;
+  }
+
+  .story {
+    padding-block: 72px;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 70px;
+  }
+
+  .story h2 {
+    margin: 5px 0 0;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    line-height: 1.05;
+  }
+
+  .story p {
+    margin: 0;
+    color: #34423e;
+    font-size: 1.2rem;
+    line-height: 1.75;
+  }
+
+  .story-copy {
+    display: grid;
+    gap: 20px;
+  }
+
+  .story blockquote {
+    margin: 0;
+    padding: 18px 20px;
+    border-left: 3px solid var(--accent);
+    color: var(--secondary);
+    background: var(--soft);
+    font-weight: 750;
+  }
+
+  .source-link {
+    width: fit-content;
+    color: var(--primary);
+    font-weight: 850;
+  }
+
+  .related {
+    padding-bottom: 30px;
+  }
+
+  .services-page h1 {
+    margin-bottom: 38px;
+  }
+
+  .service-list {
+    display: grid;
+    gap: 18px;
+  }
+
+  .service-list > a {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    color: inherit;
+    background: var(--surface);
+    text-decoration: none;
+  }
+
+  .service-list__media {
+    width: 190px;
+    min-height: 170px;
+    overflow: hidden;
+    background: var(--soft);
+  }
+
+  .service-list__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .service-list div {
+    padding: 28px;
+  }
+
+  .service-list h2 {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  .service-list p {
+    margin: 9px 0 0;
+    color: var(--muted);
+  }
+
+  .location-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .location-list a {
+    padding: 26px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    display: grid;
+    gap: 5px;
+    color: inherit;
+    background: var(--surface);
+    text-decoration: none;
+  }
+
+  .location-list strong {
+    font-size: 1.35rem;
+  }
+
+  .location-list span {
+    color: var(--muted);
+  }
+
+  @media (max-width: 720px) {
+    .card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .story {
+      grid-template-columns: 1fr;
+    }
+
+    .story,
+    .location-list {
+      gap: 28px;
+      grid-template-columns: 1fr;
+    }
+
+    .service-list > a {
+      grid-template-columns: 100px 1fr;
+    }
+
+    .service-list__media {
+      width: 100px;
+      min-height: 140px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

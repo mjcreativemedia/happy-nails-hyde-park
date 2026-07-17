@@ -1,0 +1,145 @@
+---
+import SEOHead, { type SEOProps } from "../components/SEOHead.astro";
+import StickyContactBar from "../components/StickyContactBar.astro";
+import { business } from "../config/business";
+import { mediaFallback } from "../lib/media";
+
+interface Props {
+  seo: SEOProps;
+}
+
+const { seo } = Astro.props;
+const faviconSource = business.logo || business.profilePhoto;
+const favicon = faviconSource ? mediaFallback(faviconSource) : undefined;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content={business.colors.primary} />
+    {favicon && <link rel="icon" href={favicon} />}
+    <SEOHead {...seo} />
+    <style define:vars={{
+      configPrimary: business.colors.primary,
+      configSecondary: business.colors.secondary,
+      configAccent: business.colors.accent,
+      configBackground: business.colors.background,
+    }}></style>
+  </head>
+  <body>
+    <slot />
+    <StickyContactBar />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    color-scheme: light;
+    --primary: var(--configPrimary);
+    --secondary: var(--configSecondary);
+    --accent: var(--configAccent);
+    --background: var(--configBackground);
+    --ink: #17211f;
+    --muted: #62706c;
+    --surface: #ffffff;
+    --white: #ffffff;
+    --line: #dce3de;
+    --soft: #e9efeb;
+    --shadow: 0 18px 50px rgba(18, 45, 38, 0.1);
+    --green: var(--primary);
+    --green-2: var(--secondary);
+    --orange: var(--accent);
+    --paper: var(--background);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--background);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 640px) {
+    body {
+      padding-bottom: 72px;
+    }
+  }
+
+  img,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .shell {
+    width: min(100% - 40px, 1060px);
+    margin-inline: auto;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.76rem;
+    font-weight: 850;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .page-header {
+    min-height: 64px;
+    padding-inline: max(20px, calc((100vw - 1060px) / 2));
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: color-mix(in srgb, var(--background) 94%, transparent);
+  }
+
+  .page-header a {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--primary);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .page-header img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+  }
+
+  .button {
+    min-height: 50px;
+    padding: 0 20px;
+    border-radius: 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: var(--accent);
+    font-weight: 850;
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--accent) 60%, white);
+    outline-offset: 3px;
+  }
+</style>

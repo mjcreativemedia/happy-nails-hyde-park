@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750">
+  <rect width="1200" height="750" fill="#e8eee9"/>
+  <circle cx="600" cy="340" r="210" fill="#fff"/>
+  <path d="M448 350 555 457 764 248" fill="none" stroke="#2b665c" stroke-width="54" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M806 234a250 250 0 1 1-80-92" fill="none" stroke="#e66a3c" stroke-width="22" stroke-linecap="round"/>
+  <path d="m716 116 112 14-43 104" fill="#e66a3c"/>
+  <text x="600" y="680" fill="#173f3a" font-family="Arial, sans-serif" font-size="34" font-weight="700" text-anchor="middle">DEMO PROOF IMAGE</text>
+</svg>

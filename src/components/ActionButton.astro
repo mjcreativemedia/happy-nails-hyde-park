@@ -1,0 +1,58 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  variant?: "primary" | "secondary" | "light";
+  external?: boolean;
+}
+
+const { href, label, variant = "primary", external = false } = Astro.props;
+---
+
+<a
+  class:list={["action", `action--${variant}`]}
+  href={href}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noreferrer" : undefined}
+>
+  <slot />
+  <span>{label}</span>
+</a>
+
+<style>
+  .action {
+    min-height: 50px;
+    padding: 0 18px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    font-weight: 750;
+    text-decoration: none;
+    transition:
+      transform 160ms ease,
+      background 160ms ease;
+  }
+
+  .action:hover {
+    transform: translateY(-1px);
+  }
+
+  .action--primary {
+    color: white;
+    background: var(--accent);
+  }
+
+  .action--secondary {
+    color: var(--primary);
+    border-color: #b8c8c1;
+    background: white;
+  }
+
+  .action--light {
+    color: var(--primary);
+    background: white;
+  }
+</style>

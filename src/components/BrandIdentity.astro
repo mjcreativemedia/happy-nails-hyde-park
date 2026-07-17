@@ -1,0 +1,73 @@
+---
+import { business } from "../config/business";
+import ResponsiveImage from "./ResponsiveImage.astro";
+
+interface Props {
+  showName?: boolean;
+}
+
+const { showName = false } = Astro.props;
+const identityImage = business.logo || business.profilePhoto;
+const initials = business.name
+  .split(/\s+/)
+  .filter(Boolean)
+  .slice(0, 2)
+  .map((word) => word[0])
+  .join("")
+  .toUpperCase();
+---
+
+<span class="identity">
+  {
+    identityImage ? (
+      <span class="identity__media">
+        <ResponsiveImage
+          src={identityImage}
+          alt=""
+          sizes="38px"
+          loading="eager"
+        />
+      </span>
+    ) : (
+      <span class="identity__initials" aria-hidden="true">{initials}</span>
+    )
+  }
+  {showName && <span class="identity__name">{business.name}</span>}
+</span>
+
+<style>
+  .identity {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .identity__media,
+  .identity__initials {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  .identity__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .identity__initials {
+    display: grid;
+    place-items: center;
+    color: white;
+    background: var(--primary);
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+  }
+
+  .identity__name {
+    font-weight: 850;
+  }
+</style>

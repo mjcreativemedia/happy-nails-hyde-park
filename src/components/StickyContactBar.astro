@@ -1,0 +1,72 @@
+---
+import { MessageCircle, Phone } from "@lucide/astro";
+import { business } from "../config/business";
+
+const callAction = business.contact.actions.find((action) => action.href.startsWith("tel:"));
+const textAction = business.contact.actions.find((action) => action.href.startsWith("sms:"));
+const actions = [callAction, textAction].filter(Boolean);
+---
+
+{
+  actions.length > 0 && (
+    <aside class="sticky-contact" aria-label="Quick contact">
+      {actions.map((action) => (
+        <a href={action!.href}>
+          {action!.href.startsWith("tel:") ? <Phone size={19} /> : <MessageCircle size={19} />}
+          <span>{action!.label}</span>
+        </a>
+      ))}
+    </aside>
+  )
+}
+
+<style>
+  .sticky-contact {
+    position: fixed;
+    z-index: 30;
+    right: 22px;
+    bottom: 22px;
+    padding: 5px;
+    border: 1px solid color-mix(in srgb, var(--primary) 16%, transparent);
+    border-radius: 12px;
+    display: flex;
+    gap: 5px;
+    background: color-mix(in srgb, var(--surface) 94%, transparent);
+    box-shadow: 0 14px 40px rgba(12, 24, 20, 0.18);
+    backdrop-filter: blur(14px);
+  }
+
+  a {
+    min-width: 92px;
+    min-height: 46px;
+    padding: 0 15px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: white;
+    background: var(--primary);
+    font-weight: 850;
+    text-decoration: none;
+  }
+
+  a:last-child {
+    background: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .sticky-contact {
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 8px max(12px, env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));
+      border-width: 1px 0 0;
+      border-radius: 0;
+    }
+
+    a {
+      flex: 1;
+    }
+  }
+</style>

@@ -1,0 +1,148 @@
+---
+import type { Proof } from "../data/proofs";
+import ProofVideo from "./ProofVideo.astro";
+import ResponsiveImage from "./ResponsiveImage.astro";
+
+interface Props {
+  proof: Proof;
+  behavior?: "poster" | "autoplay" | "viewport";
+  sizes?: string;
+}
+
+const {
+  proof,
+  behavior = "poster",
+  sizes = "(max-width: 720px) calc(100vw - 40px), 760px",
+} = Astro.props;
+const before = proof.media.find((item) => item.role === "before");
+const after = proof.media.find((item) => item.role === "after");
+const comparisonItems =
+  before && after
+    ? [
+        { label: "Before", item: before },
+        { label: "After", item: after },
+      ]
+    : [];
+---
+
+{
+  proof.presentation === "before-after" && before && after ? (
+    <div class="comparison" aria-label={`${proof.title} before and after`}>
+      {comparisonItems.map(({ label, item }) => (
+        <figure>
+          <div class="frame">
+            {item.type === "image" ? (
+              <ResponsiveImage src={item.src} alt={item.alt} sizes={sizes} />
+            ) : (
+              <ProofVideo
+                src={item.src}
+                poster={item.poster!}
+                alt={item.alt}
+                behavior={behavior}
+              />
+            )}
+          </div>
+          <figcaption>{label}</figcaption>
+        </figure>
+      ))}
+    </div>
+  ) : (
+    <div
+      class:list={[
+        "gallery",
+        `gallery--${proof.presentation}`,
+        proof.media.length > 1 && "gallery--swipe",
+      ]}
+      aria-label={`${proof.title} media`}
+    >
+      {proof.media.map((item, index) => (
+        <div class="frame">
+          {item.type === "image" ? (
+            <ResponsiveImage src={item.src} alt={item.alt} sizes={sizes} />
+          ) : (
+            <ProofVideo
+              src={item.src}
+              poster={item.poster!}
+              alt={item.alt || `${proof.title} video ${index + 1}`}
+              behavior={index === 0 ? behavior : "poster"}
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+<style>
+  .gallery,
+  .comparison {
+    width: 100%;
+  }
+
+  .gallery {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .gallery::-webkit-scrollbar {
+    display: none;
+  }
+
+  .frame {
+    min-width: 100%;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--soft);
+    scroll-snap-align: start;
+  }
+
+  .gallery--landscape .frame {
+    aspect-ratio: 16 / 10;
+  }
+
+  .gallery--gallery .frame {
+    aspect-ratio: 4 / 5;
+  }
+
+  .gallery :global(img),
+  .gallery :global(video),
+  .comparison :global(img),
+  .comparison :global(video) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .comparison {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3px;
+    background: var(--surface);
+  }
+
+  .comparison figure {
+    min-width: 0;
+    margin: 0;
+    position: relative;
+  }
+
+  .comparison .frame {
+    aspect-ratio: 4 / 5;
+  }
+
+  .comparison figcaption {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    color: white;
+    background: rgba(12, 20, 18, 0.78);
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

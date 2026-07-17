@@ -1,0 +1,132 @@
+---
+import { BadgeCheck, MapPin } from "@lucide/astro";
+import { tagSlug, type Proof } from "../data/proofs";
+import { collectionPath, proofPath } from "../lib/urls";
+import ProofMedia from "./ProofMedia.astro";
+
+interface Props {
+  proof: Proof;
+  videoBehavior?: "poster" | "autoplay" | "viewport";
+}
+
+const { proof, videoBehavior = "poster" } = Astro.props;
+const hasDetailPage = proof.routePolicy === "detail-page";
+---
+
+<article class="proof-card">
+  <div class="proof-card__media">
+    <ProofMedia
+      proof={proof}
+      behavior={videoBehavior}
+      sizes="(max-width: 720px) calc(100vw - 40px), 520px"
+    />
+  </div>
+
+  <div class="proof-card__body">
+    <div class="proof-card__tags" aria-label="Proof tags">
+      {proof.tags.map((tag) => <a href={collectionPath(tagSlug(tag))}>{tag}</a>)}
+      {proof.location && <span><MapPin size={13} /> {proof.location}</span>}
+    </div>
+
+    <h3>
+      {hasDetailPage ? <a href={proofPath(proof.slug)}>{proof.title}</a> : proof.title}
+    </h3>
+
+    {
+      proof.captionExcerpt && (
+        <p class="proof-card__caption">{proof.captionExcerpt}</p>
+      )
+    }
+
+    {
+      proof.trustSignal && (
+        <p class="proof-card__trust">
+          <BadgeCheck size={17} />
+          {proof.trustSignal}
+        </p>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .proof-card {
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: 0 12px 36px rgba(24, 44, 38, 0.08);
+  }
+
+  .proof-card__media {
+    overflow: hidden;
+    background: var(--soft);
+  }
+
+  .proof-card__body {
+    padding: 22px;
+    display: grid;
+    gap: 14px;
+  }
+
+  .proof-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .proof-card__tags span,
+  .proof-card__tags a {
+    min-height: 29px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--secondary);
+    background: var(--soft);
+    font-size: 0.73rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: clamp(1.45rem, 3vw, 2rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+
+  h3 a {
+    text-decoration: none;
+  }
+
+  h3 a:hover {
+    color: var(--accent);
+  }
+
+  .proof-card__caption {
+    margin: -4px 0 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .proof-card__trust {
+    margin: 0;
+    padding-top: 13px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    color: var(--secondary);
+    font-size: 0.87rem;
+    font-weight: 750;
+  }
+
+  .proof-card__trust :global(svg) {
+    flex: 0 0 auto;
+    color: var(--accent);
+  }
+</style>

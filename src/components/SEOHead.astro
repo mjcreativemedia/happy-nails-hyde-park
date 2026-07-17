@@ -1,0 +1,45 @@
+---
+import { business } from "../config/business";
+import { absoluteUrl, assetUrl } from "../lib/urls";
+import { mediaFallback } from "../lib/media";
+
+export interface SEOProps {
+  title: string;
+  description: string;
+  canonical: string;
+  image?: string;
+  type?: "website" | "article";
+  jsonLd?: unknown;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  image = business.profilePhoto || business.heroImage,
+  type = "website",
+  jsonLd,
+} = Astro.props as SEOProps;
+
+const canonicalUrl = absoluteUrl(canonical);
+const imageUrl = assetUrl(mediaFallback(image));
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+<meta name="robots" content="index,follow,max-image-preview:large" />
+
+<meta property="og:site_name" content={business.name} />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={imageUrl} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+
+{jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}

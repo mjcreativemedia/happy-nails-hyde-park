@@ -1,0 +1,444 @@
+{
+  "/images/proof/silver-linework-1.jpg": {
+    "source": "/images/proof/silver-linework-1.jpg",
+    "width": 960,
+    "height": 1200,
+    "fallback": "/images/proof/silver-linework-1-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/silver-linework-1-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/silver-linework-1-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/silver-linework-1-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/silver-linework-1-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/silver-linework-1-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/silver-linework-1-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "/images/proof/silver-linework-2.jpg": {
+    "source": "/images/proof/silver-linework-2.jpg",
+    "width": 960,
+    "height": 1200,
+    "fallback": "/images/proof/silver-linework-2-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/silver-linework-2-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/silver-linework-2-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/silver-linework-2-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/silver-linework-2-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/silver-linework-2-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/silver-linework-2-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "/images/proof/silver-linework-3.jpg": {
+    "source": "/images/proof/silver-linework-3.jpg",
+    "width": 960,
+    "height": 1200,
+    "fallback": "/images/proof/silver-linework-3-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/silver-linework-3-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/silver-linework-3-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/silver-linework-3-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/silver-linework-3-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/silver-linework-3-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/silver-linework-3-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "/images/proof/mint-gold-1.jpg": {
+    "source": "/images/proof/mint-gold-1.jpg",
+    "width": 960,
+    "height": 1200,
+    "fallback": "/images/proof/mint-gold-1-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/mint-gold-1-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/mint-gold-1-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/mint-gold-1-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/mint-gold-1-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/mint-gold-1-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/mint-gold-1-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "/images/proof/mint-gold-2.jpg": {
+    "source": "/images/proof/mint-gold-2.jpg",
+    "width": 960,
+    "height": 1200,
+    "fallback": "/images/proof/mint-gold-2-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/mint-gold-2-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/mint-gold-2-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/mint-gold-2-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/mint-gold-2-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/mint-gold-2-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/mint-gold-2-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "/images/proof/iridescent-sculpture.jpg": {
+    "source": "/images/proof/iridescent-sculpture.jpg",
+    "width": 1200,
+    "height": 900,
+    "fallback": "/images/proof/iridescent-sculpture-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/iridescent-sculpture-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/iridescent-sculpture-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/iridescent-sculpture-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/iridescent-sculpture-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/iridescent-sculpture-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/iridescent-sculpture-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "/images/proof/candy-nail-art.jpg": {
+    "source": "/images/proof/candy-nail-art.jpg",
+    "width": 960,
+    "height": 1200,
+    "fallback": "/images/proof/candy-nail-art-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/candy-nail-art-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/candy-nail-art-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/candy-nail-art-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/candy-nail-art-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/candy-nail-art-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/candy-nail-art-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "/images/proof/gemstone-art-1.jpg": {
+    "source": "/images/proof/gemstone-art-1.jpg",
+    "width": 960,
+    "height": 1200,
+    "fallback": "/images/proof/gemstone-art-1-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/gemstone-art-1-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/gemstone-art-1-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/gemstone-art-1-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/gemstone-art-1-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/gemstone-art-1-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/gemstone-art-1-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "/images/proof/gemstone-art-2.jpg": {
+    "source": "/images/proof/gemstone-art-2.jpg",
+    "width": 961,
+    "height": 1200,
+    "fallback": "/images/proof/gemstone-art-2-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/gemstone-art-2-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/gemstone-art-2-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/gemstone-art-2-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/gemstone-art-2-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/gemstone-art-2-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/gemstone-art-2-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "/images/proof/gemstone-art-3.jpg": {
+    "source": "/images/proof/gemstone-art-3.jpg",
+    "width": 960,
+    "height": 1200,
+    "fallback": "/images/proof/gemstone-art-3-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/gemstone-art-3-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/gemstone-art-3-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/gemstone-art-3-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/gemstone-art-3-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/gemstone-art-3-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/gemstone-art-3-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "/images/proof/pink-botanical-1.jpg": {
+    "source": "/images/proof/pink-botanical-1.jpg",
+    "width": 1091,
+    "height": 1200,
+    "fallback": "/images/proof/pink-botanical-1-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/pink-botanical-1-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/pink-botanical-1-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/pink-botanical-1-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/pink-botanical-1-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/pink-botanical-1-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/pink-botanical-1-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "/images/proof/pink-botanical-2.jpg": {
+    "source": "/images/proof/pink-botanical-2.jpg",
+    "width": 1093,
+    "height": 1200,
+    "fallback": "/images/proof/pink-botanical-2-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/pink-botanical-2-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/pink-botanical-2-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/pink-botanical-2-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/pink-botanical-2-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/pink-botanical-2-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/pink-botanical-2-1200.webp",
+        "width": 1200
+      }
+    ]
+  },
+  "/images/proof/pink-botanical-3.jpg": {
+    "source": "/images/proof/pink-botanical-3.jpg",
+    "width": 1093,
+    "height": 1200,
+    "fallback": "/images/proof/pink-botanical-3-1200.webp",
+    "avif": [
+      {
+        "src": "/images/proof/pink-botanical-3-400.avif",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/pink-botanical-3-800.avif",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/pink-botanical-3-1200.avif",
+        "width": 1200
+      }
+    ],
+    "webp": [
+      {
+        "src": "/images/proof/pink-botanical-3-400.webp",
+        "width": 400
+      },
+      {
+        "src": "/images/proof/pink-botanical-3-800.webp",
+        "width": 800
+      },
+      {
+        "src": "/images/proof/pink-botanical-3-1200.webp",
+        "width": 1200
+      }
+    ]
+  }
+}

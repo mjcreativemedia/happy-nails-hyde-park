@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750">
+  <rect width="1200" height="750" fill="#173f3a"/>
+  <rect x="130" y="110" width="940" height="480" rx="24" fill="#f8f8f4"/>
+  <path d="M245 230h710M245 350h710M245 470h710" stroke="#d6dfda" stroke-width="8"/>
+  <circle cx="310" cy="230" r="36" fill="#e66a3c"/>
+  <circle cx="600" cy="350" r="36" fill="#2b665c"/>
+  <circle cx="890" cy="470" r="36" fill="#e66a3c"/>
+  <path d="M346 230h508M636 350h218" stroke="#90aaa2" stroke-width="20" stroke-linecap="round"/>
+  <text x="600" y="680" fill="#fff" font-family="Arial, sans-serif" font-size="34" font-weight="700" text-anchor="middle">DEMO PROOF IMAGE</text>
+</svg>
