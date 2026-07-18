@@ -22,7 +22,7 @@ const {
   muted
   loop
   playsinline
-  preload={behavior === "autoplay" ? "metadata" : "none"}
+  preload={behavior === "poster" ? "none" : "metadata"}
   autoplay={behavior === "autoplay"}
   controls={controls}
   data-viewport-video={behavior === "viewport" ? "" : undefined}
@@ -49,7 +49,10 @@ const {
               }
             }
           },
-          { threshold: 0.55 },
+          {
+            rootMargin: "250px 0px",
+            threshold: 0.01,
+          },
         );
 
         videos.forEach((video) => observer.observe(video));
